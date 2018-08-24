@@ -22,17 +22,19 @@ module.exports = {
       },
       {
         test: /\.scss$/,
-        use: [{
-          loader: "style-loader" // creates style nodes from JS strings
-        }, {
-          loader: "css-loader", // translates CSS into CommonJS
-          options: { importLoaders: 1 }
-        }, {
-          loader: 'postcss-loader'
-        },{
-          loader: "sass-loader" // compiles Sass to CSS
-        }]
+        use: ExtractTextPlugin.extract({
+          use:[{
+            loader:"css-loader"
+          },{
+            loader:"sass-loader"
+          }],
+          fallback:"style-loader"
+
+        })
       }
     ]
-  }
+  },
+  plugins:[
+    new ExtractTextPlugin("/css/[name].css"),
+  ]
 };
